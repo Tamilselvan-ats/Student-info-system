@@ -1,0 +1,6 @@
+{
+  "name": "EduManage SIS",
+  "description": "A comprehensive Student Information System featuring real-time data management, C++ project source code, and complete academic documentation.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["Firebase", "Dashboard", "Academic Documentation"]
+}

@@ -1,0 +1,49 @@
+{
+  "entities": {
+    "Student": {
+      "title": "Student",
+      "description": "Student record in the SIS",
+      "type": "object",
+      "properties": {
+        "rollNumber": {
+          "type": "integer",
+          "description": "Unique roll number of the student"
+        },
+        "name": {
+          "type": "string",
+          "description": "Full name of the student"
+        },
+        "department": {
+          "type": "string",
+          "description": "Department name"
+        },
+        "semester": {
+          "type": "integer",
+          "description": "Current semester"
+        },
+        "cgpa": {
+          "type": "number",
+          "format": "float",
+          "description": "Cumulative Grade Point Average"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when the record was created"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when the record was last updated"
+        }
+      },
+      "required": ["rollNumber", "name", "department", "semester", "cgpa"]
+    }
+  },
+  "firestore": {
+    "students": {
+      "schema": "Student",
+      "description": "Collection of student documents"
+    }
+  }
+}
