@@ -22,14 +22,13 @@ import { collection, onSnapshot, query, orderBy } from 'firebase/firestore';
 import { db } from './lib/firebase';
 import StudentList from './components/StudentList';
 import StudentForm from './components/StudentForm';
-import ReportContent from './components/ReportContent';
 import DashboardOverview from './components/DashboardOverview';
 import { motion, AnimatePresence } from 'motion/react';
 import { cn } from './lib/utils';
 
 export default function App() {
   const [user, setUser] = useState<any>(null);
-  const [view, setView] = useState<'overview' | 'manage' | 'report'>('overview');
+  const [view, setView] = useState<'overview' | 'manage'>('overview');
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingStudent, setEditingStudent] = useState<Student | null>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -79,28 +78,6 @@ export default function App() {
     </button>
   );
 
-  if (view === 'report') {
-    return (
-      <div className="min-h-screen bg-zinc-100 text-gray-900 overflow-x-hidden font-sans selection:bg-blue-100">
-        <header className="bg-white border-b border-gray-200 py-4 px-8 sticky top-0 z-50 flex justify-between items-center shadow-sm">
-          <div className="flex items-center gap-3">
-             <div className="w-8 h-8 bg-black text-white flex items-center justify-center font-bold">R</div>
-             <h1 className="font-black uppercase text-sm tracking-widest">Academic Project Portal</h1>
-          </div>
-          <button 
-            onClick={() => setView('overview')}
-            className="text-xs font-black uppercase text-blue-600 hover:underline flex items-center gap-2"
-          >
-            ← Back to SIS Application
-          </button>
-        </header>
-        <div className="max-w-7xl mx-auto">
-          <ReportContent />
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="min-h-screen bg-black flex text-white font-sans overflow-x-hidden">
       {/* Sidebar */}
@@ -125,7 +102,6 @@ export default function App() {
               <p className="section-label px-10 mb-4">01. Navigation</p>
               <NavItem id="overview" icon={LayoutDashboard} label="Dashboard" />
               <NavItem id="manage" icon={Command} label="Manage Records" />
-              <NavItem id="report" icon={FileText} label="Project Report" />
             </div>
             
             <div className="py-8 border-t border-white/5">
