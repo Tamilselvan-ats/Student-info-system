@@ -34,6 +34,7 @@ export default function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [students, setStudents] = useState<Student[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [authError, setAuthError] = useState<string | null>(null);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (u) => {
@@ -141,12 +142,27 @@ export default function App() {
                 </button>
               </>
             ) : (
-              <button 
-                onClick={() => signInWithGoogle().catch(console.error)}
-                className="w-full py-4 accent-bg text-black font-black text-[10px] uppercase tracking-[0.2em] hover:scale-105 transition-all duration-300"
-              >
-                Sign In with Google
-              </button>
+              <div className="space-y-4">
+                {authError && (
+                  <div className="p-3 bg-red-900/20 border border-red-500/50 text-red-500 text-[9px] font-black uppercase tracking-widest leading-relaxed">
+                    Error: {authError.includes('unauthorized-domain') ? 'Domain not authorized in Firebase' : authError}
+                  </div>
+                )}
+                <button 
+                  onClick={async () => {
+                    try {
+                      setAuthError(null);
+                      await signInWithGoogle();
+                    } catch (err: any) {
+                      setAuthError(err.message);
+                      console.error(err);
+                    }
+                  }}
+                  className="w-full py-4 accent-bg text-black font-black text-[10px] uppercase tracking-[0.2em] hover:scale-105 transition-all duration-300"
+                >
+                  Sign In with Google
+                </button>
+              </div>
             )}
           </footer>
         </div>
