@@ -146,7 +146,16 @@ export default function App() {
                 {authError && (
                   <div className="p-3 bg-red-900/20 border border-red-500/50 text-red-500 text-[9px] font-black uppercase tracking-widest leading-relaxed">
                     <p className="mb-1 font-bold">Sign-In Failed:</p>
-                    <p className="opacity-80 break-words">{authError}</p>
+                    <p className="opacity-80 break-words mb-2">{authError}</p>
+                    <button 
+                      onClick={() => {
+                        navigator.clipboard.writeText(window.location.hostname);
+                        alert('Domain name copied! Paste this into Firebase Authorized Domains.');
+                      }}
+                      className="w-full py-2 bg-red-500/20 hover:bg-red-500/40 border border-red-500/30 text-white transition-colors"
+                    >
+                      Copy Domain Name
+                    </button>
                   </div>
                 )}
                 <button 
