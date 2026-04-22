@@ -7,7 +7,7 @@
 **SUBMITTED BY:** [Your Name]  
 **REGISTER NUMBER:** [Your Register Number]  
 **DEPARTMENT:** Computer Science & Engineering  
-**YEAR / SEMESTER:** 2nd Year / 4th Semester  
+**YEAR / SEMESTER:** 1st Year / 2nd Semester  
 **ACADEMIC YEAR:** 2025-2026
 
 ***
