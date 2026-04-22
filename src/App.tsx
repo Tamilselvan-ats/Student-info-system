@@ -145,7 +145,8 @@ export default function App() {
               <div className="space-y-4">
                 {authError && (
                   <div className="p-3 bg-red-900/20 border border-red-500/50 text-red-500 text-[9px] font-black uppercase tracking-widest leading-relaxed">
-                    Error: {authError.includes('unauthorized-domain') ? 'Domain not authorized in Firebase' : authError}
+                    <p className="mb-1 font-bold">Sign-In Failed:</p>
+                    <p className="opacity-80 break-words">{authError}</p>
                   </div>
                 )}
                 <button 
