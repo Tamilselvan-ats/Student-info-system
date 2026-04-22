@@ -10,7 +10,12 @@ import { Search, Trash2, Edit2, GraduationCap } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { cn } from '../lib/utils';
 
-export default function StudentList({ onEdit, students, isLoading }: { onEdit: (student: Student) => void, students: Student[], isLoading: boolean }) {
+export default function StudentList({ onEdit, students, isLoading, isAdmin }: { 
+  onEdit: (student: Student) => void, 
+  students: Student[], 
+  isLoading: boolean,
+  isAdmin: boolean
+}) {
   const [searchTerm, setSearchTerm] = useState('');
 
   const handleDelete = async (id: string | undefined) => {
@@ -75,7 +80,7 @@ export default function StudentList({ onEdit, students, isLoading }: { onEdit: (
                 <th className="px-6 py-4 text-[10px] font-black uppercase tracking-widest">Dept</th>
                 <th className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-center">Sem</th>
                 <th className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-center">CGPA</th>
-                <th className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-right">Ops</th>
+                {isAdmin && <th className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-right">Ops</th>}
               </tr>
             </thead>
             <tbody className="divide-y divide-black/10">
@@ -109,22 +114,24 @@ export default function StudentList({ onEdit, students, isLoading }: { onEdit: (
                         {student.cgpa.toFixed(2)}
                       </div>
                     </td>
-                    <td className="px-6 py-6 text-right">
-                      <div className="flex items-center justify-end gap-1">
-                        <button 
-                          onClick={() => onEdit(student)}
-                          className="w-10 h-10 flex items-center justify-center text-black hover:bg-black hover:text-white transition-all"
-                        >
-                          <Edit2 size={14} />
-                        </button>
-                        <button 
-                          onClick={() => handleDelete(student.id)}
-                          className="w-10 h-10 flex items-center justify-center text-black hover:bg-orange-600 hover:text-white transition-all"
-                        >
-                          <Trash2 size={14} />
-                        </button>
-                      </div>
-                    </td>
+                    {isAdmin && (
+                      <td className="px-6 py-6 text-right">
+                        <div className="flex items-center justify-end gap-1">
+                          <button 
+                            onClick={() => onEdit(student)}
+                            className="w-10 h-10 flex items-center justify-center text-black hover:bg-black hover:text-white transition-all"
+                          >
+                            <Edit2 size={14} />
+                          </button>
+                          <button 
+                            onClick={() => handleDelete(student.id)}
+                            className="w-10 h-10 flex items-center justify-center text-black hover:bg-orange-600 hover:text-white transition-all"
+                          >
+                            <Trash2 size={14} />
+                          </button>
+                        </div>
+                      </td>
+                    )}
                   </motion.tr>
                 ))}
               </AnimatePresence>

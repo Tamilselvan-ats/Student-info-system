@@ -23,6 +23,7 @@ import { db } from './lib/firebase';
 import StudentList from './components/StudentList';
 import StudentForm from './components/StudentForm';
 import DashboardOverview from './components/DashboardOverview';
+import { ADMIN_EMAIL } from './constants';
 import { motion, AnimatePresence } from 'motion/react';
 import { cn } from './lib/utils';
 
@@ -54,7 +55,10 @@ export default function App() {
     };
   }, []);
 
+  const isAdmin = user?.email === ADMIN_EMAIL;
+
   const handleEdit = (student: Student) => {
+    if (!isAdmin) return;
     setEditingStudent(student);
     setIsFormOpen(true);
   };
@@ -131,7 +135,9 @@ export default function App() {
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-[10px] font-black uppercase tracking-widest truncate">{user.displayName || 'Authorized'}</p>
-                    <p className="text-[9px] text-zinc-500 uppercase truncate">System Administrator</p>
+                    <p className="text-[9px] text-zinc-500 uppercase truncate">
+                      {isAdmin ? 'System Administrator' : 'Viewer'}
+                    </p>
                   </div>
                 </div>
                 <button 
@@ -190,7 +196,7 @@ export default function App() {
               <p className="section-label">Server Time</p>
               <p className="mono text-xs font-bold">{new Date().toLocaleTimeString()}</p>
             </div>
-            {view === 'manage' && (
+            {view === 'manage' && isAdmin && (
               <button 
                 onClick={() => {
                   setEditingStudent(null);
@@ -217,7 +223,12 @@ export default function App() {
               {view === 'overview' ? (
                 <DashboardOverview students={students} />
               ) : (
-                <StudentList onEdit={handleEdit} students={students} isLoading={isLoading} />
+                <StudentList 
+                  onEdit={handleEdit} 
+                  students={students} 
+                  isLoading={isLoading} 
+                  isAdmin={isAdmin}
+                />
               )}
             </motion.div>
           </AnimatePresence>

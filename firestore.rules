@@ -10,6 +10,10 @@ service cloud.firestore {
       return request.auth != null;
     }
 
+    function isAdmin() {
+      return isSignedIn() && request.auth.token.email == 'ts4490797@gmail.com' && request.auth.token.email_verified == true;
+    }
+
     function isValidId(id) {
       return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
     }
@@ -38,10 +42,10 @@ service cloud.firestore {
     }
 
     match /students/{studentId} {
-      allow read: if true; // Allow public read for this SIS demo
-      allow create: if isSignedIn() && isValidStudent(request.resource.data);
-      allow update: if isSignedIn() && isValidUpdate(request.resource.data, resource.data);
-      allow delete: if isSignedIn();
+      allow read: if true; 
+      allow create: if isAdmin() && isValidStudent(request.resource.data);
+      allow update: if isAdmin() && isValidUpdate(request.resource.data, resource.data);
+      allow delete: if isAdmin();
     }
   }
 }
